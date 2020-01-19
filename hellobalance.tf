@@ -1,13 +1,4 @@
-# resource "aws_lb" "hello_lb" {
-#   name = "hello-loadbalancer"
-#   internal = false
-#   load_balancer_type = "application"
-#   security_groups = ["${aws_security_group.hw_loadbalancer.id}"]
-#   subnets         = [aws_subnet.main.*.id[0], aws_subnet.main.*.id[1]]
-#   enable_deletion_protection = true
-  
-# }
-
+#  Application Load balancer.
 resource "aws_alb_target_group" "hello-instances" {
   name = "alb-target-group"
   port = 80

@@ -10,7 +10,7 @@ data "template_file" "userdata-hblue" {
 
 # Instance resource
 resource "aws_instance" "hello_blue" {
-  ami = "ami-062f7200baf2fa504"
+  ami = var.aws_region_ami[var.aws_region]
   instance_type = "t2.micro"
   subnet_id = aws_subnet.main-public-1.id  # This should be a private subnet, but still figuring that out
   security_groups = ["${aws_security_group.instance-sg.id}"]
@@ -23,6 +23,8 @@ resource "aws_alb_target_group_attachment" "alb-hblue" {
   target_id = aws_instance.hello_blue.id
   port = 80
 }
+
+#  Setting up autoscaling isn't working as it should.  Will need to do more investigation.
 
 # resource "aws_launch_configuration" "lc-hello-blue" {
 #   name_prefix = "blue-hellos"

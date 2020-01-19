@@ -1,5 +1,5 @@
 /*
-  GrBlueeen instance of Hello World.  Not to be confused with the Green instance of 
+  Blue instance of Hello World.  Not to be confused with the Green instance of 
   Hello World.  "Hellow World" is right out.
 */
 
@@ -8,11 +8,11 @@ data "template_file" "userdata-hblue" {
   template = file("${path.module}/scripts/helloblue.sh")
 }
 
-# Instance
+# Instance resource
 resource "aws_instance" "hello_blue" {
   ami = "ami-062f7200baf2fa504"
   instance_type = "t2.micro"
-  subnet_id = aws_subnet.main-public-1.id
+  subnet_id = aws_subnet.main-public-1.id  # This should be a private subnet, but still figuring that out
   security_groups = ["${aws_security_group.instance-sg.id}"]
   user_data = data.template_file.userdata-hblue.rendered
 }
@@ -23,10 +23,6 @@ resource "aws_alb_target_group_attachment" "alb-hblue" {
   target_id = aws_instance.hello_blue.id
   port = 80
 }
-
-/*
-  Setup for auto-scaling.  
-*/
 
 # resource "aws_launch_configuration" "lc-hello-blue" {
 #   name_prefix = "blue-hellos"

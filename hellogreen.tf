@@ -12,7 +12,7 @@ data "template_file" "userdata-hgreen" {
 resource "aws_instance" "hello_green" {
   ami = "ami-062f7200baf2fa504"
   instance_type = "t2.micro"
-  subnet_id = aws_subnet.main-public-2.id
+  subnet_id = aws_subnet.main-public-2.id  # This should be a private subnet, but still figuring that out
   security_groups = ["${aws_security_group.instance-sg.id}"]
   user_data = data.template_file.userdata-hgreen.rendered
 }
